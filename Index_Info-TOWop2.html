@@ -56,11 +56,11 @@
     /* Theme toggle button */
     .theme-toggle {
       position: fixed;
-      top: 30px;
-      right: 30px;
+      top: 20px;
+      right: 20px;
       z-index: 1000;
-      width: 60px;
-      height: 60px;
+      width: 50px;
+      height: 50px;
       background: var(--bg-secondary);
       backdrop-filter: blur(20px);
       border: 1px solid var(--border-color);
@@ -71,7 +71,7 @@
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       color: var(--text-primary);
-      font-size: 1.2rem;
+      font-size: 1rem;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     }
 
@@ -114,6 +114,15 @@
       animation: sparkle 15s linear infinite;
     }
 
+    #particle-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+    }
+
     @keyframes float {
       0%, 100% { transform: translate(0, 0) rotate(0deg); }
       33% { transform: translate(30px, -30px) rotate(120deg); }
@@ -131,7 +140,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 0 20px;
+      padding: 0 15px;
       position: relative;
       z-index: 1;
     }
@@ -141,9 +150,9 @@
       background: var(--bg-secondary);
       backdrop-filter: blur(20px);
       border: 1px solid var(--border-color);
-      border-radius: 24px;
-      padding: 60px 50px;
-      max-width: 900px;
+      border-radius: 20px;
+      padding: 40px 30px;
+      max-width: 700px;
       width: 100%;
       text-align: center;
       box-shadow: 
@@ -169,7 +178,7 @@
     @keyframes slideUp {
       from { 
         opacity: 0; 
-        transform: translateY(60px) scale(0.95); 
+        transform: translateY(50px) scale(0.95); 
       }
       to { 
         opacity: 1; 
@@ -183,19 +192,18 @@
     }
 
     .logo {
-      width: 120px;
-      height: 120px;
-      margin: 0 auto 30px;
-      /* background: linear-gradient(135deg, var(--accent), var(--accent-secondary)); */
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 20px;
       background: var(--logo-bg);
-      border-radius: 28px;
+      border-radius: 24px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2.5rem;
+      font-size: 2rem;
       color: white;
-      box-shadow: 0 10px 30px rgba(18, 50, 255, 0.5);
-      animation: pulse 2s ease-in-out infinite alternate;
+      box-shadow: 0 10px 30px rgba(18, 50, 255, 0.5), 0 0 20px rgba(18, 50, 255, 0.7);
+      animation: levitate 3s ease-in-out infinite, pulse 2s ease-in-out infinite alternate;
       position: relative;
       overflow: hidden;
     }
@@ -205,12 +213,17 @@
       height: 80%;
       object-fit: contain;
       object-position: center;
-      border-radius: 20px;
+      border-radius: 16px;
       transition: transform 0.3s ease;
     }
 
     .logo:hover img {
       transform: scale(1.05);
+    }
+
+    @keyframes levitate {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
     }
 
     @keyframes pulse {
@@ -219,15 +232,16 @@
     }
 
     h1 {
-      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-size: clamp(2rem, 4vw, 3rem);
       font-weight: 800;
-      background: linear-gradient(135deg, var(--text-primary), var(--accent), var(--accent-secondary), var(--text-primary));
+      background: linear-gradient(45deg, var(--text-primary), var(--accent), var(--accent-secondary), var(--text-primary));
+      background-size: 200% 200%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       letter-spacing: -0.02em;
-      animation: textGlow 3s ease-in-out infinite alternate;
+      animation: textGlow 3s ease-in-out infinite alternate, gradientFlow 5s ease-in-out infinite;
     }
 
     @keyframes textGlow {
@@ -235,30 +249,36 @@
       to { filter: brightness(1.2); }
     }
 
+    @keyframes gradientFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
     .subtitle {
-      font-size: 1.25rem;
+      font-size: 1.1rem;
       color: var(--text-secondary);
-      margin-bottom: 40px;
+      margin-bottom: 30px;
       font-weight: 300;
-      line-height: 1.6;
-      max-width: 600px;
+      line-height: 1.5;
+      max-width: 500px;
       margin-left: auto;
       margin-right: auto;
     }
 
     .contact-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 30px;
-      margin: 50px 0;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
       width: 100%;
     }
 
     .contact-card {
       background: var(--bg-card);
       border: 1px solid var(--border-card);
-      border-radius: 20px;
-      padding: 30px 25px;
+      border-radius: 16px;
+      padding: 20px 15px;
       text-align: left;
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
@@ -277,41 +297,74 @@
       transition: transform 0.4s ease;
     }
 
+    .contact-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: 0.5s;
+    }
+
     .contact-card:hover {
-      transform: translateY(-8px);
+      transform: translateY(-6px);
       background: rgba(18, 50, 255, 0.08);
       border-color: rgba(18, 50, 255, 0.3);
-      box-shadow: 0 20px 40px rgba(18, 50, 255, 0.2);
+      box-shadow: 0 15px 30px rgba(18, 50, 255, 0.2);
     }
 
     .contact-card:hover::before {
       transform: scaleX(1);
     }
 
+    .contact-card:hover::after {
+      left: 100%;
+    }
+
+    .contact-card:nth-child(odd) {
+      animation: slideInLeft 0.8s ease-out forwards;
+    }
+
+    .contact-card:nth-child(even) {
+      animation: slideInRight 0.8s ease-out forwards;
+    }
+
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-40px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(40px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
     .contact-icon {
-      width: 50px;
-      height: 50px;
+      width: 40px;
+      height: 40px;
       background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
-      border-radius: 12px;
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       color: white;
-      font-size: 1.2rem;
+      font-size: 1rem;
     }
 
     .contact-title {
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 600;
       color: var(--text-primary);
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .contact-info {
       color: var(--text-muted);
-      line-height: 1.6;
-      font-size: 0.95rem;
+      line-height: 1.5;
+      font-size: 0.9rem;
     }
 
     .contact-info a {
@@ -342,35 +395,35 @@
     }
 
     .social-section {
-      margin-top: 50px;
+      margin-top: 30px;
       text-align: center;
     }
 
     .social-title {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       font-weight: 600;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
       color: var(--text-secondary);
     }
 
     .social-icons {
       display: flex;
       justify-content: center;
-      gap: 20px;
+      gap: 15px;
       flex-wrap: wrap;
     }
 
     .social-icons a {
-      width: 60px;
-      height: 60px;
+      width: 50px;
+      height: 50px;
       background: var(--bg-card);
       border: 1px solid var(--border-color);
-      border-radius: 18px;
+      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--text-muted);
-      font-size: 1.4rem;
+      font-size: 1.2rem;
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       text-decoration: none;
       position: relative;
@@ -390,10 +443,10 @@
     }
 
     .social-icons a:hover {
-      transform: translateY(-5px) scale(1.05);
+      transform: translateY(-4px) rotate(5deg) scale(1.05);
       border-color: var(--accent);
       color: #fff;
-      box-shadow: 0 15px 30px rgba(18, 50, 255, 0.4);
+      box-shadow: 0 10px 20px rgba(18, 50, 255, 0.4);
     }
 
     .social-icons a:hover::before {
@@ -408,50 +461,58 @@
     /* Responsive Design */
     @media (max-width: 768px) {
       .theme-toggle {
-        top: 20px;
-        right: 20px;
-        width: 50px;
-        height: 50px;
-        font-size: 1rem;
+        top: 15px;
+        right: 15px;
+        width: 40px;
+        height: 40px;
+        font-size: 0.9rem;
       }
 
       .hero-card {
-        padding: 40px 30px;
-        margin: 20px;
+        padding: 25px 15px;
+        margin: 10px;
       }
 
       .contact-grid {
         grid-template-columns: 1fr;
-        gap: 20px;
-      }
-
-      .social-icons {
         gap: 15px;
       }
 
+      .social-icons {
+        gap: 10px;
+      }
+
       .social-icons a {
-        width: 50px;
-        height: 50px;
-        font-size: 1.2rem;
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
       }
     }
 
     @media (max-width: 480px) {
       .hero-card {
-        padding: 30px 20px;
+        padding: 20px 10px;
       }
 
       .logo {
-        width: 100px;
-        height: 100px;
-        font-size: 2rem;
+        width: 80px;
+        height: 80px;
+        font-size: 1.6rem;
+      }
+
+      h1 {
+        font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      }
+
+      .subtitle {
+        font-size: 1rem;
       }
     }
 
     /* Scroll indicator */
     .scroll-indicator {
       position: absolute;
-      bottom: 30px;
+      bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
       color: var(--text-muted);
@@ -460,8 +521,13 @@
 
     @keyframes bounce {
       0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-      40% { transform: translateX(-50%) translateY(-10px); }
-      60% { transform: translateX(-50%) translateY(-5px); }
+      40% { transform: translateX(-50%) translateY(-8px); }
+      60% { transform: translateX(-50%) translateY(-4px); }
+    }
+
+    @keyframes spark {
+      0% { transform: scale(0); opacity: 1; }
+      100% { transform: scale(2); opacity: 0; }
     }
   </style>
 </head>
@@ -471,6 +537,7 @@
   </div>
 
   <div class="bg-particles"></div>
+  <canvas id="particle-canvas"></canvas>
   
   <div class="container">
     <div class="hero-card">
@@ -544,6 +611,22 @@
       const themeIcon = document.getElementById('theme-icon');
       const currentTheme = body.getAttribute('data-theme');
       
+      // Create spark effect
+      const spark = document.createElement('div');
+      spark.style.cssText = `
+        position: fixed;
+        top: ${themeIcon.getBoundingClientRect().top}px;
+        left: ${themeIcon.getBoundingClientRect().left}px;
+        width: 80px;
+        height: 80px;
+        background: radial-gradient(circle, rgba(18, 50, 255, 0.5), transparent);
+        border-radius: 50%;
+        pointer-events: none;
+        animation: spark 0.5s ease-out forwards;
+      `;
+      document.body.appendChild(spark);
+      setTimeout(() => spark.remove(), 500);
+
       if (currentTheme === 'light') {
         body.setAttribute('data-theme', 'dark');
         themeIcon.className = 'fas fa-moon';
@@ -568,7 +651,7 @@
     // Add smooth hover effects and interactions
     document.querySelectorAll('.contact-card').forEach(card => {
       card.addEventListener('mouseenter', function() {
-        this.style.transform = 'translateY(-8px) scale(1.02)';
+        this.style.transform = 'translateY(-6px) scale(1.02)';
       });
       
       card.addEventListener('mouseleave', function() {
@@ -582,7 +665,7 @@
       const x = e.clientX / window.innerWidth;
       const y = e.clientY / window.innerHeight;
       
-      particles.style.transform = `translate(${x * 20}px, ${y * 20}px)`;
+      particles.style.transform = `translate(${x * 15}px, ${y * 15}px)`;
     });
 
     // Smooth scroll indicator
@@ -595,6 +678,70 @@
         });
       });
     }
+
+    // Particle effect
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const particlesArray = [];
+    const numberOfParticles = 30; // Reduced for better performance
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 4 + 1;
+        this.speedX = Math.random() * 2 - 1;
+        this.speedY = Math.random() * 2 - 1;
+      }
+
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        if (this.size > 0.2) this.size -= 0.1;
+        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+      }
+
+      draw() {
+        ctx.fillStyle = 'rgba(18, 50, 255, 0.5)';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function initParticles() {
+      for (let i = 0; i < numberOfParticles; i++) {
+        particlesArray.push(new Particle());
+      }
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < particlesArray.length; i++) {
+        particlesArray[i].update();
+        particlesArray[i].draw();
+        if (particlesArray[i].size <= 0.2) {
+          particlesArray.splice(i, 1);
+          i--;
+          particlesArray.push(new Particle());
+        }
+      }
+      requestAnimationFrame(animateParticles);
+    }
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    initParticles();
+    animateParticles();
   </script>
 </body>
 </html>
