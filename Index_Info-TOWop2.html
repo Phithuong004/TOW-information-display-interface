@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Ocean Wide</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --bg-primary: #000;
+      --bg-secondary: rgba(255, 255, 255, 0.05);
+      --bg-card: rgba(255, 255, 255, 0.03);
+      --text-primary: #fff;
+      --text-secondary: rgba(255, 255, 255, 0.8);
+      --text-muted: rgba(255, 255, 255, 0.7);
+      --border-color: rgba(255, 255, 255, 0.1);
+      --border-card: rgba(255, 255, 255, 0.08);
+      --accent: #1232ff;
+      --accent-secondary: #5b76ff;
+      --particle-color: rgba(18, 50, 255, 0.3);
+      --logo-bg: #0000;
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f8fafc;
+      --bg-secondary: rgba(255, 255, 255, 0.8);
+      --bg-card: rgba(255, 255, 255, 0.9);
+      --text-primary: #1a202c;
+      --text-secondary: #4a5568;
+      --text-muted: #718096;
+      --border-color: rgba(0, 0, 0, 0.1);
+      --border-card: rgba(0, 0, 0, 0.05);
+      --accent: #1232ff;
+      --accent-secondary: #5b76ff;
+      --particle-color: rgba(18, 50, 255, 0.1);
+      --logo-bg: #fff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    /* Theme toggle button */
+    .theme-toggle {
+      position: fixed;
+      top: 30px;
+      right: 30px;
+      z-index: 1000;
+      width: 60px;
+      height: 60px;
+      background: var(--bg-secondary);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border-color);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      color: var(--text-primary);
+      font-size: 1.2rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.1) rotate(10deg);
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 12px 40px rgba(18, 50, 255, 0.3);
+    }
+
+    /* Animated background particles */
+    .bg-particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: radial-gradient(circle at 20% 80%, var(--particle-color) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 20%, rgba(18, 50, 255, 0.15) 0%, transparent 50%),
+                  radial-gradient(circle at 40% 40%, rgba(18, 50, 255, 0.08) 0%, transparent 50%);
+      animation: float 20s ease-in-out infinite;
+      transition: all 0.3s ease;
+    }
+
+    .bg-particles::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        radial-gradient(2px 2px at 20px 30px, var(--particle-color), transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(18, 50, 255, 0.2), transparent),
+        radial-gradient(1px 1px at 90px 40px, rgba(18, 50, 255, 0.4), transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(18, 50, 255, 0.3), transparent);
+      background-repeat: repeat;
+      background-size: 200px 100px;
+      animation: sparkle 15s linear infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      33% { transform: translate(30px, -30px) rotate(120deg); }
+      66% { transform: translate(-20px, 20px) rotate(240deg); }
+    }
+
+    @keyframes sparkle {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-100px); }
+    }
+
+    .container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Glassmorphism effect */
+    .hero-card {
+      background: var(--bg-secondary);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      padding: 60px 50px;
+      max-width: 900px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 
+        0 8px 32px rgba(18, 50, 255, 0.3),
+        inset 0 1px 0 var(--border-color);
+      animation: slideUp 1s ease-out;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .hero-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(18, 50, 255, 0.1), transparent);
+      animation: shimmer 3s infinite;
+    }
+
+    @keyframes slideUp {
+      from { 
+        opacity: 0; 
+        transform: translateY(60px) scale(0.95); 
+      }
+      to { 
+        opacity: 1; 
+        transform: translateY(0) scale(1); 
+      }
+    }
+
+    @keyframes shimmer {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    .logo {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 30px;
+      /* background: linear-gradient(135deg, var(--accent), var(--accent-secondary)); */
+      background: var(--logo-bg);
+      border-radius: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      color: white;
+      box-shadow: 0 10px 30px rgba(18, 50, 255, 0.5);
+      animation: pulse 2s ease-in-out infinite alternate;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo img {
+      width: 80%;
+      height: 80%;
+      object-fit: contain;
+      object-position: center;
+      border-radius: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .logo:hover img {
+      transform: scale(1.05);
+    }
+
+    @keyframes pulse {
+      from { box-shadow: 0 10px 30px rgba(18, 50, 255, 0.5); }
+      to { box-shadow: 0 15px 40px rgba(18, 50, 255, 0.8); }
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--text-primary), var(--accent), var(--accent-secondary), var(--text-primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 20px;
+      letter-spacing: -0.02em;
+      animation: textGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes textGlow {
+      from { filter: brightness(1); }
+      to { filter: brightness(1.2); }
+    }
+
+    .subtitle {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+      font-weight: 300;
+      line-height: 1.6;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      margin: 50px 0;
+      width: 100%;
+    }
+
+    .contact-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 20px;
+      padding: 30px 25px;
+      text-align: left;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+      transform: scaleX(0);
+      transition: transform 0.4s ease;
+    }
+
+    .contact-card:hover {
+      transform: translateY(-8px);
+      background: rgba(18, 50, 255, 0.08);
+      border-color: rgba(18, 50, 255, 0.3);
+      box-shadow: 0 20px 40px rgba(18, 50, 255, 0.2);
+    }
+
+    .contact-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .contact-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      color: white;
+      font-size: 1.2rem;
+    }
+
+    .contact-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+    }
+
+    .contact-info {
+      color: var(--text-muted);
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    .contact-info a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .contact-info a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    .contact-info a:hover {
+      color: var(--accent-secondary);
+    }
+
+    .contact-info a:hover::after {
+      width: 100%;
+    }
+
+    .social-section {
+      margin-top: 50px;
+      text-align: center;
+    }
+
+    .social-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 25px;
+      color: var(--text-secondary);
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .social-icons a {
+      width: 60px;
+      height: 60px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 1.4rem;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .social-icons a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .social-icons a:hover {
+      transform: translateY(-5px) scale(1.05);
+      border-color: var(--accent);
+      color: #fff;
+      box-shadow: 0 15px 30px rgba(18, 50, 255, 0.4);
+    }
+
+    .social-icons a:hover::before {
+      opacity: 1;
+    }
+
+    .social-icons a i {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .theme-toggle {
+        top: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        font-size: 1rem;
+      }
+
+      .hero-card {
+        padding: 40px 30px;
+        margin: 20px;
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .social-icons {
+        gap: 15px;
+      }
+
+      .social-icons a {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-card {
+        padding: 30px 20px;
+      }
+
+      .logo {
+        width: 100px;
+        height: 100px;
+        font-size: 2rem;
+      }
+    }
+
+    /* Scroll indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--text-muted);
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+      40% { transform: translateX(-50%) translateY(-10px); }
+      60% { transform: translateX(-50%) translateY(-5px); }
+    }
+  </style>
+</head>
+<body>
+  <div class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">
+    <i class="fas fa-moon" id="theme-icon"></i>
+  </div>
+
+  <div class="bg-particles"></div>
+  
+  <div class="container">
+    <div class="hero-card">
+      <div class="logo">
+        <img src="/Info-TOW/tow-logo.png" alt="The Ocean Wide Logo" loading="lazy">
+      </div>
+      
+      <h1>The Ocean Wide</h1>
+      <p class="subtitle">
+        Redefining excellence through innovation. We deliver cutting-edge solutions 
+        that transform your vision into extraordinary reality.
+      </p>
+
+      <div class="contact-grid">
+        <div class="contact-card">
+          <div class="contact-icon">
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
+          <div class="contact-title">Our Locations</div>
+          <div class="contact-info">
+            <strong>Denver, USA</strong><br>
+            1007 S Federal Blvd<br>
+            Denver, CO 80219<br><br>
+            <strong>Ho Chi Minh, Vietnam</strong><br>
+            TM 0.18, 8X-Plus<br>
+            163A Truong Chinh, Tan Thoi Nhat<br>
+            District 12, HCM
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-icon">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <div class="contact-title">Get In Touch</div>
+          <div class="contact-info">
+            <strong>Email:</strong><br>
+            <a href="mailto:info@theoceanwide.com">info@theoceanwide.com</a><br><br>
+            <strong>Phone:</strong><br>
+            US: <a href="tel:+17203340899">+1 (720) 334-0899</a><br>
+            VN: <a href="tel:+840707140980">+84 0707 140980</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="social-section">
+        <div class="social-title">Connect With Us</div>
+        <div class="social-icons">
+          <a href="https://www.facebook.com/oceanwidemedia/" target="_blank" aria-label="Facebook">
+            <i class="fab fa-facebook-f"></i> 
+          </a>
+          <a href="https://www.instagram.com/oceanwidemedia/" target="_blank" aria-label="Instagram">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/oceanwide-media-group/" target="_blank" aria-label="LinkedIn">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-indicator">
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </div>
+
+  <script>
+    // Theme toggle functionality
+    function toggleTheme() {
+      const body = document.body;
+      const themeIcon = document.getElementById('theme-icon');
+      const currentTheme = body.getAttribute('data-theme');
+      
+      if (currentTheme === 'light') {
+        body.setAttribute('data-theme', 'dark');
+        themeIcon.className = 'fas fa-moon';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        body.setAttribute('data-theme', 'light');
+        themeIcon.className = 'fas fa-sun';
+        localStorage.setItem('theme', 'light');
+      }
+    }
+
+    // Load saved theme
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      const body = document.body;
+      const themeIcon = document.getElementById('theme-icon');
+      
+      body.setAttribute('data-theme', savedTheme);
+      themeIcon.className = savedTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+    });
+
+    // Add smooth hover effects and interactions
+    document.querySelectorAll('.contact-card').forEach(card => {
+      card.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-8px) scale(1.02)';
+      });
+      
+      card.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0) scale(1)';
+      });
+    });
+
+    // Parallax effect for background particles
+    document.addEventListener('mousemove', (e) => {
+      const particles = document.querySelector('.bg-particles');
+      const x = e.clientX / window.innerWidth;
+      const y = e.clientY / window.innerHeight;
+      
+      particles.style.transform = `translate(${x * 20}px, ${y * 20}px)`;
+    });
+
+    // Smooth scroll indicator
+    const scrollIndicator = document.querySelector('.scroll-indicator');
+    if (scrollIndicator) {
+      scrollIndicator.addEventListener('click', () => {
+        window.scrollTo({
+          top: window.innerHeight,
+          behavior: 'smooth'
+        });
+      });
+    }
+  </script>
+</body>
+</html>

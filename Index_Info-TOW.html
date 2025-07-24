@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Ocean Wide</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.0/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to bottom right, #e6edff, #f7faff);
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 12px 40px rgba(18, 50, 255, 0.25);
+      padding: 50px 35px;
+      max-width: 750px;
+      width: 100%;
+      animation: slideUp 1.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      border: 2px solid #1232ff20;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .logo {
+      width: 100px;
+      margin-bottom: 25px;
+    }
+
+    h1 {
+      font-size: 2.7rem;
+      color: #1232ff;
+      background: linear-gradient(to right, #1232ff, #5b76ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 15px;
+    }
+
+    p.description {
+      font-size: 1.15rem;
+      color: #555;
+      margin-bottom: 20px;
+      line-height: 1.8;
+      max-width: 650px;
+    }
+
+    .contact-info {
+      margin-top: 30px;
+      text-align: left;
+      width: 100%;
+    }
+
+    .contact-info strong {
+      display: block;
+      color: #1232ff;
+      font-size: 1.1rem;
+      margin-top: 20px;
+    }
+
+    .contact-info p {
+      margin: 5px 0 8px 0;
+      font-size: 1rem;
+      color: #444;
+    }
+
+    a {
+      color: #1232ff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    a:hover {
+      color: #0f28cc;
+      text-decoration: underline;
+    }
+
+    .social-icons {
+        color: #fff;
+      margin-top: 35px;
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+    }
+
+    .social-icons a {
+      color: #fff;
+      background: #1232ff;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      font-size: 1.4rem;
+      box-shadow: 0 6px 15px rgba(18, 50, 255, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .social-icons a:hover {
+      transform: scale(1.15);
+      background: #0f28cc;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 35px 20px;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+      .social-icons a {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="/Info-TOW/tow-logo.png" alt="Company Logo" class="logo" />
+    <h1>The Ocean Wide</h1>
+    <p class="description">Welcome to our company! We are dedicated to providing the best services to our customers.</p>
+    
+    <div class="contact-info">
+      <strong>Location:</strong>
+      <p>US: 1007 S Federal Blvd, Denver, CO 80219</p>
+      <p>VN Office: TM 0.18, 8X-Plus, 163A Truong Chinh, Tan Thoi Nhat Ward, District 12, HCM</p>
+
+      <strong>Email us:</strong>
+      <p><a href="mailto:info@theoceanwide.com">info@theoceanwide.com</a></p>
+
+      <strong>Call Us On:</strong>
+      <p>US: <a href="tel:+17203340899">+1 (720) 334-0899</a></p>
+      <p>VN: <a href="tel:+840707140980">+84 0707 140980</a></p>
+    </div>
+
+    <div class="social-icons">
+      <a href="https://facebook.com/theoceanwide" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://instagram.com/theoceanwide" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="https://linkedin.com/company/theoceanwide" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+  </div>
+</body>
+</html>
